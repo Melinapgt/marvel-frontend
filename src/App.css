@@ -8,7 +8,6 @@
   max-width: 1380px;
   margin: 0px auto;
   margin-top: 50px;
-  background-color: aquamarine;
 }
 /* HEADER--------------------------------------------------- */
 
@@ -40,9 +39,17 @@
 }
 
 .character-card {
-  width: 400px;
-  height: 400px;
+  width: 200px;
+  height: 300px;
   border: 2px solid red;
   padding: 10px;
   margin-bottom: 30px;
+  margin-right: 10px;
+}
+.character-card .character-picture img {
+  width: 100px;
+}
+
+.character-avatar {
+  display: flex;
 }
