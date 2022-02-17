@@ -3,11 +3,13 @@ import "../App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ComicsCharacterId = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { characterId } = useParams();
+
   //   console.log("params==>", characterId);
 
   useEffect(() => {
@@ -31,6 +33,12 @@ const ComicsCharacterId = () => {
           return (
             <div key={comic._id}>
               <div className="comic-card">
+                <div>
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-heart"
+                    className="favorite-icon"
+                  />
+                </div>
                 <div>{comic.title}</div>
                 <div>
                   <div className="comic-picture">

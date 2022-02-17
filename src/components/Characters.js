@@ -1,5 +1,6 @@
 import "../App.css";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Characters = (props) => {
   const { data } = props;
@@ -14,6 +15,12 @@ const Characters = (props) => {
             // console.log(character._id);
             return (
               <div key={character._id}>
+                <div>
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-heart"
+                    className="favorite-icon"
+                  />
+                </div>
                 <Link to={`/comics/${character._id}`}>
                   <div className="character-card">
                     <div className="character-avatar">
@@ -34,7 +41,6 @@ const Characters = (props) => {
           })}
         </div>
       </div>
-      Characters Component
     </div>
   );
 };

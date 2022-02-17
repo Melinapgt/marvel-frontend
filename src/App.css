@@ -2,12 +2,34 @@
 
 .app {
   width: 100vw;
+  min-height: 100vh;
 }
 
 .container {
   max-width: 1380px;
   margin: 0px auto;
   margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.pages {
+  display: flex;
+  justify-content: center;
+}
+
+.pages button {
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+h2 {
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
 }
 /* HEADER--------------------------------------------------- */
 
@@ -71,11 +93,6 @@
   object-fit: cover;
 }
 
-.comic-characterId-page .container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .comic-characterId-page .comic-card {
   width: 400px;
   border: 2px solid red;
@@ -89,13 +106,54 @@
   object-fit: cover;
 }
 
-.comics-page .container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .comics-page .comic-card {
   width: 400px;
   border: 2px solid red;
   margin: 0 20px 20px 0;
+}
+
+.card-section {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* FORMS------------------------------------------------ */
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  justify-content: center;
+  margin: 0px auto;
+}
+
+.container-form {
+  max-width: 1380px;
+  margin: 0px auto;
+  margin-top: 50px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: 70vh;
+}
+
+.signup-form button {
+  margin-top: 20px;
+}
+
+/* FAVORIS------------------------------------------------ */
+
+.favorite-icon {
+  color: grey;
+}
+
+.favorite-icon:hover {
+  color: red;
+  cursor: pointer;
+}
+
+/* FOOTER------------------------------------------------ */
+
+footer {
+  margin-top: 50px;
 }

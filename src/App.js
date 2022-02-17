@@ -6,6 +6,11 @@ import Home from "./pages/Home";
 import ComicsCharacterId from "./pages/ComicsCharacterId";
 import Comics from "./pages/Comics";
 import { useState } from "react";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+library.add(faHeart);
 
 function App() {
   const [title, setTitle] = useState("");
@@ -16,9 +21,11 @@ function App() {
       <Router>
         <Header setTitle={setTitle} setComicsName={setComicsName} />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home comicsName={comicsName} />} />
           <Route path="/comics/:characterId" element={<ComicsCharacterId />} />
-          <Route path="/comics" element={<Comics />} />
+          <Route path="/comics" element={<Comics title={title} />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
       </Router>
