@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import ComicsCharacterId from "./pages/ComicsCharacterId";
+import Comics from "./pages/Comics";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/comics/:characterId" element={<ComicsCharacterId />} />
+          <Route path="/comics" element={<Comics />} />
         </Routes>
         <Footer />
       </Router>

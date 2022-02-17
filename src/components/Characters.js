@@ -10,10 +10,11 @@ const Characters = (props) => {
           {data.results.map((character, index) => {
             const picture = character.thumbnail;
             picture.image = `${picture.path}.${picture.extension}`; // console.log(picture);
-            console.log(character._id);
+
+            // console.log(character._id);
             return (
               <div key={character._id}>
-                <Link to="/comics/:characterId" characterid={character._id}>
+                <Link to={`/comics/${character._id}`}>
                   <div className="character-card">
                     <div className="character-avatar">
                       <div className="character-picture">
