@@ -2,7 +2,8 @@ import "../App.css";
 import logo from "../assets/img/logo_marvel.png";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
+  const { setTitle, setComicsName } = props;
   return (
     <div className="header">
       <div className="header-container">
@@ -13,7 +14,14 @@ const Header = () => {
         </Link>
 
         <div className="search-bar">
-          <input type="text" placeholder="Recherche" />
+          <input
+            type="text"
+            placeholder="Recherche"
+            onChange={(event) => {
+              setTitle(event.target.value);
+              setComicsName(event.target.value);
+            }}
+          />
         </div>
 
         <div className="menu">

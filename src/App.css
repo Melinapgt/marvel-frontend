@@ -81,3 +81,21 @@
   border: 2px solid red;
   margin: 0 20px 20px 0;
 }
+
+/* COMICS PAGES ------------------------------------------------ */
+
+.comics-page img {
+  width: 200px;
+  object-fit: cover;
+}
+
+.comics-page .container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.comics-page .comic-card {
+  width: 400px;
+  border: 2px solid red;
+  margin: 0 20px 20px 0;
+}

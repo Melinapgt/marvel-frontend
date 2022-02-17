@@ -5,12 +5,16 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import ComicsCharacterId from "./pages/ComicsCharacterId";
 import Comics from "./pages/Comics";
+import { useState } from "react";
 
 function App() {
+  const [title, setTitle] = useState("");
+  const [comicsName, setComicsName] = useState("");
+
   return (
     <div className="app">
       <Router>
-        <Header />
+        <Header setTitle={setTitle} setComicsName={setComicsName} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/comics/:characterId" element={<ComicsCharacterId />} />
