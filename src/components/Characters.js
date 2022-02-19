@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Characters = (props) => {
   const { data } = props;
+
   return (
     <div className="characters-page">
       <div className="container">
@@ -19,6 +20,15 @@ const Characters = (props) => {
                   <FontAwesomeIcon
                     icon="fa-solid fa-heart"
                     className="favorite-icon"
+                    onClick={() => {
+                      // const favorites = async () => {
+                      //   const response = await localStorage.setItem("", "");
+                      //   if (response) {
+                      //     console.log(response);
+                      //   }
+                      // };
+                      // favorites().then("valeur");
+                    }}
                   />
                 </div>
                 <Link to={`/comics/${character._id}`}>

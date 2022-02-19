@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
 import ComicsCharacterId from "./pages/ComicsCharacterId";
 import Comics from "./pages/Comics";
 import { useState } from "react";
@@ -26,6 +27,7 @@ function App() {
           <Route path="/comics" element={<Comics title={title} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Routes>
         <Footer />
       </Router>

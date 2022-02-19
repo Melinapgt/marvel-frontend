@@ -3,6 +3,7 @@
 .app {
   width: 100vw;
   min-height: 100vh;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 .container {
