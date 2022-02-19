@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 const Header = (props) => {
   const { setTitle, setComicsName } = props;
   const location = useLocation();
-  console.log(location.pathname);
+  // console.log(location.pathname);
   return (
     <div className="header">
       <div className="header-container">
@@ -46,8 +46,11 @@ const Header = (props) => {
             <div>Comics</div>
           </Link>
 
-          <div>Favoris</div>
-          <Link to="login">
+          <Link to="/favorites">
+            <div>Favoris</div>
+          </Link>
+
+          <Link to="/login">
             <button>Se connecter</button>
           </Link>
           <Link to="/signup">
