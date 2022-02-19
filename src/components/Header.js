@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 const Header = (props) => {
-  const { setTitle, setComicsName } = props;
+  const { setTitle, setComicsName, userToken, setUser } = props;
   const location = useLocation();
+
   // console.log(location.pathname);
   return (
     <div className="header">
@@ -49,13 +50,25 @@ const Header = (props) => {
           <Link to="/favorites">
             <div>Favoris</div>
           </Link>
-
-          <Link to="/login">
-            <button>Se connecter</button>
-          </Link>
-          <Link to="/signup">
-            <button>S'inscrire</button>
-          </Link>
+          {userToken ? (
+            <button
+              className="btn-logout"
+              onClick={() => {
+                setUser(null);
+              }}
+            >
+              Se déconnecter
+            </button>
+          ) : (
+            <div>
+              <Link to="/login">
+                <button>Se connecter</button>
+              </Link>
+              <Link to="/signup">
+                <button>S'inscrire</button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
