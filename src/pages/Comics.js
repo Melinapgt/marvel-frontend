@@ -1,13 +1,18 @@
+import "../App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Comics = (props) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { title } = props;
   const [page, setPage] = useState(1);
+  const navigate = useNavigate;
+
+  const userToken = Cookies.get("userToken");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +35,25 @@ const Comics = (props) => {
 
     fetchData();
   }, [title, page]);
+
+  const handleClickAddFavorite = async (title, comicsId, userToken) => {
+    // console.log("title==>", title);
+    // console.log("comicsId==>", comicsId);
+    console.log("userToken==>", userToken);
+    try {
+      if (userToken) {
+        const response = await axios.post(
+          " http://localhost:4001/ajout/favoris/comics",
+          { title, comicsId, userToken }
+        );
+        console.log(response.data);
+      } else {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log("error.response==>", error.response);
+    }
+  };
 
   return isLoading ? (
     <div>En cours de chargement</div>
@@ -59,13 +83,25 @@ const Comics = (props) => {
         <div className="card-section">
           {data.results.map((comic, index) => {
             const pictureComics = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
+
+            const comicsTitle = comic.title;
+            const comicsId = comic._id;
             return (
               <div key={comic._id} className="comic-card">
                 <div>
-                  <FontAwesomeIcon
+                  <button
+                    className="add-favoris"
+                    onClick={() =>
+                      handleClickAddFavorite(comicsTitle, comicsId, userToken)
+                    }
+                  >
+                    Favoris
+                  </button>
+                  {/* <FontAwesomeIcon
                     icon="fa-solid fa-heart"
                     className="favorite-icon"
-                  />
+                    onClick={() => handleClickAddFavorite(title, comicsId)}
+                  /> */}
                 </div>
                 <div>{comic.title}</div>
                 <div>

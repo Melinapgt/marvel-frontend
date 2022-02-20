@@ -48,7 +48,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home comicsName={comicsName} />} />
           <Route path="/comics/:characterId" element={<ComicsCharacterId />} />
-          <Route path="/comics" element={<Comics title={title} />} />
+          <Route
+            path="/comics"
+            element={<Comics title={title} />}
+            userToken={userToken}
+          />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/favorites" element={<Favorites />} />

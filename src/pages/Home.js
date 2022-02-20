@@ -7,7 +7,7 @@ const Home = (props) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const { comicsName, setFav, fav } = props;
+  const { comicsName } = props;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,7 +54,7 @@ const Home = (props) => {
           Page suivante
         </button>
       </div>
-      <Characters data={data} setFav={setFav} fav={fav} />
+      <Characters data={data} />
       <div className="pages">
         {page > 1 && (
           <button
