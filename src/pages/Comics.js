@@ -10,7 +10,7 @@ const Comics = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const { title } = props;
   const [page, setPage] = useState(1);
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   const userToken = Cookies.get("userToken");
 
@@ -36,7 +36,13 @@ const Comics = (props) => {
     fetchData();
   }, [title, page]);
 
-  const handleClickAddFavorite = async (title, comicsId, userToken) => {
+  const handleClickAddFavorite = async (
+    title,
+    comicsId,
+    userToken,
+    pictureComics,
+    comicsDescription
+  ) => {
     // console.log("title==>", title);
     // console.log("comicsId==>", comicsId);
     console.log("userToken==>", userToken);
@@ -44,7 +50,7 @@ const Comics = (props) => {
       if (userToken) {
         const response = await axios.post(
           " http://localhost:4001/ajout/favoris/comics",
-          { title, comicsId, userToken }
+          { title, comicsId, userToken, pictureComics, comicsDescription }
         );
         console.log(response.data);
       } else {
@@ -86,13 +92,20 @@ const Comics = (props) => {
 
             const comicsTitle = comic.title;
             const comicsId = comic._id;
+            const comicsDescription = comic.description;
             return (
               <div key={comic._id} className="comic-card">
                 <div>
                   <button
                     className="add-favoris"
                     onClick={() =>
-                      handleClickAddFavorite(comicsTitle, comicsId, userToken)
+                      handleClickAddFavorite(
+                        comicsTitle,
+                        comicsId,
+                        userToken,
+                        pictureComics,
+                        comicsDescription
+                      )
                     }
                   >
                     Favoris
