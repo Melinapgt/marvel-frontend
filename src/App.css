@@ -35,7 +35,7 @@ button {
 /* HEADER--------------------------------------------------- */
 
 .header {
-  border-bottom: 1px solid black;
+  background-color: #0f0f0f;
 }
 
 .header img {
@@ -59,8 +59,29 @@ button {
   display: flex;
 }
 
+.search-bar input {
+  width: 200px;
+  height: 30px;
+  background-color: #0f0f0f;
+  border: 1px solid white;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 5px;
+  color: white;
+}
+
 .link-home {
   cursor: pointer;
+}
+
+.menu .link-comics,
+.menu .link-favorites {
+  text-decoration: none;
+  color: white;
+}
+
+.menu button {
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 /* HOME--------------------------------------------------- */
@@ -72,19 +93,21 @@ button {
 }
 
 .character-card {
-  width: 200px;
+  width: 400px;
   height: 300px;
-  border: 2px solid red;
+
   padding: 10px;
   margin-bottom: 30px;
   margin-right: 10px;
 }
 .character-card .character-picture img {
-  width: 100px;
+  width: 200px;
+  border-radius: 5px;
 }
 
 .character-avatar {
   display: flex;
+  flex-direction: column;
 }
 
 /* COMIC CHARACHTER PAGES ------------------------------------------------ */

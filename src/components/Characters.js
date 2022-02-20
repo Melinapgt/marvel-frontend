@@ -77,7 +77,7 @@ const Characters = (props) => {
                         <img src={pictureCharacter} alt="" />
                       </div>
                       <div className="character-name">
-                        <span>{character.name}</span>
+                        <p>{character.name}</p>
                       </div>
                     </div>
                     <div>

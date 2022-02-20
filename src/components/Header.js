@@ -43,12 +43,12 @@ const Header = (props) => {
         )}
 
         <div className="menu">
-          <Link to="/comics">
-            <div>Comics</div>
+          <Link to="/comics" className="link-comics">
+            <div>COMICS</div>
           </Link>
 
-          <Link to="/favorites">
-            <div>Favoris</div>
+          <Link to="/favorites" className="link-favorites">
+            <div>FAVORIS</div>
           </Link>
           {userToken ? (
             <button

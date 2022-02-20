@@ -25,7 +25,7 @@ const Comics = (props) => {
         setIsLoading(false);
       } else {
         const response = await axios.get(
-          `http://localhost:4001/comics?page=${page}`
+          `http://localhost:4001comics?page=${page}`
         );
         console.log("response.data==>", response.data);
         setData(response.data);
