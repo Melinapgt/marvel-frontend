@@ -2,6 +2,7 @@ import "../App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Characters from "../components/Characters";
+import Hero from "../components/Hero";
 
 const Home = (props) => {
   const [data, setData] = useState();
@@ -34,45 +35,47 @@ const Home = (props) => {
     <div> En cours de chargement...</div>
   ) : (
     <div className="homepage">
-      <div className="container"></div>
-      <div className="pages">
-        {page > 1 && (
+      <Hero />
+      <div className="container">
+        <div className="pages">
+          {page > 1 && (
+            <button
+              onClick={() => {
+                setPage(page - 1);
+              }}
+            >
+              Page précédente
+            </button>
+          )}
+
           <button
             onClick={() => {
-              setPage(page - 1);
+              setPage(page + 1);
             }}
           >
-            Page précédente
+            Page suivante
           </button>
-        )}
+        </div>
+        <Characters data={data} />
+        <div className="pages">
+          {page > 1 && (
+            <button
+              onClick={() => {
+                setPage(page - 1);
+              }}
+            >
+              Page précédente
+            </button>
+          )}
 
-        <button
-          onClick={() => {
-            setPage(page + 1);
-          }}
-        >
-          Page suivante
-        </button>
-      </div>
-      <Characters data={data} />
-      <div className="pages">
-        {page > 1 && (
           <button
             onClick={() => {
-              setPage(page - 1);
+              setPage(page + 1);
             }}
           >
-            Page précédente
+            Page suivante
           </button>
-        )}
-
-        <button
-          onClick={() => {
-            setPage(page + 1);
-          }}
-        >
-          Page suivante
-        </button>
+        </div>
       </div>
     </div>
   );
