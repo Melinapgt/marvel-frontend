@@ -1,7 +1,7 @@
 import "../App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -49,7 +49,7 @@ const Comics = (props) => {
     try {
       if (userToken) {
         const response = await axios.post(
-          " http://localhost:4001/ajout/favoris/comics",
+          "http://localhost:4001/ajout/favoris/comics",
           { title, comicsId, userToken, pictureComics, comicsDescription }
         );
         console.log(response.data);

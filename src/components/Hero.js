@@ -1,5 +1,5 @@
 import "../App.css";
-import banner from "../assets/img/stanbanner.jpg";
+import banner from "../assets/img/spiderman-ban.jpg";
 
 const Hero = () => {
   return (

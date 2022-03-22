@@ -11,8 +11,12 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Cookies from "js-cookie";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-library.add(faHeart);
+import {
+  faChevronLeft,
+  faChevronRight,
+  faHeart,
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faHeart, faChevronRight, faChevronLeft);
 
 function App() {
   const [title, setTitle] = useState("");

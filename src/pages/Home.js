@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Characters from "../components/Characters";
 import Hero from "../components/Hero";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Home = (props) => {
   const [data, setData] = useState();
@@ -44,18 +45,46 @@ const Home = (props) => {
                 setPage(page - 1);
               }}
             >
-              Page précédente
+              <FontAwesomeIcon
+                className="chevron"
+                icon="fa-solid fa-chevron-left"
+              />
             </button>
           )}
+          <div>
+            {page - 1 > 0 && (
+              <span
+                className="prev"
+                onClick={() => {
+                  setPage(page - 1);
+                }}
+              >
+                {page - 1}
+              </span>
+            )}
+            <span className="current-page">{page}</span>
 
+            <span
+              className="next"
+              onClick={() => {
+                setPage(page + 1);
+              }}
+            >
+              {page + 1}
+            </span>
+          </div>
           <button
             onClick={() => {
               setPage(page + 1);
             }}
           >
-            Page suivante
+            <FontAwesomeIcon
+              className="chevron"
+              icon="fa-solid fa-chevron-right"
+            />
           </button>
         </div>
+        <h2>MARVEL'S CHARACTERS LIST</h2>
         <Characters data={data} />
         <div className="pages">
           {page > 1 && (

@@ -1,9 +1,10 @@
 import "../App.css";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import LinesEllipsis from "react-lines-ellipsis";
 
 const Characters = (props) => {
   const { data } = props;
@@ -70,18 +71,31 @@ const Characters = (props) => {
                     }}
                   /> */}
                 </div>
-                <Link to={`/comics/${character._id}`}>
-                  <div className="character-card">
-                    <div className="character-avatar">
-                      <div className="character-picture">
-                        <img src={pictureCharacter} alt="" />
-                      </div>
+                <Link
+                  to={`/comics/${character._id}`}
+                  className="link-characterId-comics"
+                >
+                  <div className="character-card hvr-grow">
+                    <div className="character-picture">
+                      <img src={pictureCharacter} alt="" />
+                    </div>
+                    {/* <div className="character-name">
+                        <p>{character.name}</p>
+                      </div> */}
+
+                    <div className="character-text">
                       <div className="character-name">
                         <p>{character.name}</p>
                       </div>
-                    </div>
-                    <div>
-                      <p>{character.description}</p>
+                      <p>
+                        <LinesEllipsis
+                          text={character.description}
+                          maxLine="3"
+                          ellipsis="..."
+                          trimRight
+                          basedOn="letters"
+                        />
+                      </p>
                     </div>
                   </div>
                 </Link>
