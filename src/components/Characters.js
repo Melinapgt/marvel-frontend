@@ -87,15 +87,14 @@ const Characters = (props) => {
                       <div className="character-name">
                         <p>{character.name}</p>
                       </div>
-                      <p>
-                        <LinesEllipsis
-                          text={character.description}
-                          maxLine="3"
-                          ellipsis="..."
-                          trimRight
-                          basedOn="letters"
-                        />
-                      </p>
+
+                      <LinesEllipsis
+                        text={character.description}
+                        maxLine="3"
+                        ellipsis="..."
+                        trimRight
+                        basedOn="letters"
+                      />
                     </div>
                   </div>
                 </Link>

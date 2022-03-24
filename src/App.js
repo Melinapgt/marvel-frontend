@@ -14,16 +14,21 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faChevronLeft,
   faChevronRight,
+  faCircleChevronRight,
   faHeart,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faHeart, faChevronRight, faChevronLeft);
+library.add(faHeart, faChevronRight, faChevronLeft, faX, faCircleChevronRight);
 
 function App() {
+  //States
   const [title, setTitle] = useState("");
   const [comicsName, setComicsName] = useState("");
   const [userToken, setUserToken] = useState(Cookies.get("userToken") || null);
+  const [selectedComic, setSelectedComic] = useState();
   // const [username, setUsername] = useState("");
 
+  //Paramétrage des Cookies
   const setUser = (userToken) => {
     if (userToken) {
       Cookies.set("userToken", userToken, { expires: 10 });
@@ -52,7 +57,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Home comicsName={comicsName} />} />
           <Route path="/comics/:characterId" element={<ComicsCharacterId />} />
-          <Route path="/comics" element={<Comics title={title} />} />
+          <Route
+            path="/comics"
+            element={
+              <Comics
+                title={title}
+                setSelectedComic={setSelectedComic}
+                selectedComic={selectedComic}
+              />
+            }
+          />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/favorites" element={<Favorites />} />

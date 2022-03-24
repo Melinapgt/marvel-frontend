@@ -1,41 +1,55 @@
 import "../App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import ComicsModal from "../components/ComicsModal";
 
 const Comics = (props) => {
-  const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const { title } = props;
-  const [page, setPage] = useState(1);
+  // Hooks settings
   const navigate = useNavigate();
 
+  //Props
+  const { title, setSelectedComic, selectedComic } = props;
+
+  //states
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [showComicsModal, setShowComicsModal] = useState(false);
+  const [page, setPage] = useState(1);
+
+  //Cookies
   const userToken = Cookies.get("userToken");
 
+  //requête au chargement de la page
   useEffect(() => {
-    const fetchData = async () => {
-      if (title) {
-        const response = await axios.get(
-          `http://localhost:4001/comics?title=${title}&page=${page}`
-        );
-        console.log("response.data==>", response.data);
-        setData(response.data);
-        setIsLoading(false);
-      } else {
-        const response = await axios.get(
-          `http://localhost:4001/comics?page=${page}`
-        );
-        console.log("response.data==>", response.data);
-        setData(response.data);
-        setIsLoading(false);
-      }
-    };
+    try {
+      const fetchData = async () => {
+        if (title) {
+          const response = await axios.get(
+            `http://localhost:4001/comics?title=${title}&page=${page}`
+          );
+          console.log("response.data==>", response.data);
+          setData(response.data);
+          setIsLoading(false);
+        } else {
+          const response = await axios.get(
+            `http://localhost:4001/comics?page=${page}`
+          );
+          console.log("response.data==>", response.data);
+          setData(response.data);
+          setIsLoading(false);
+        }
+      };
 
-    fetchData();
+      fetchData();
+    } catch (error) {
+      console.log("error response comics ==>", error.response);
+    }
   }, [title, page]);
 
+  // Au clic Favoris
   const handleClickAddFavorite = async (
     title,
     comicsId,
@@ -61,10 +75,24 @@ const Comics = (props) => {
     }
   };
 
+  //Déclaration de variable
+  const pageMax = 1493 / 100;
+
+  const handleClickComics = (comic) => {
+    setShowComicsModal(true);
+    setSelectedComic(comic);
+  };
+
   return isLoading ? (
     <div>En cours de chargement</div>
   ) : (
     <div className="comics-page">
+      <ComicsModal
+        selectedComic={selectedComic}
+        showComicsModal={showComicsModal}
+        setSelectedComic={setSelectedComic}
+        setShowComicsModal={setShowComicsModal}
+      />
       <div className="container">
         <div className="pages">
           {page > 1 && (
@@ -73,18 +101,50 @@ const Comics = (props) => {
                 setPage(page - 1);
               }}
             >
-              Page précédente
+              <FontAwesomeIcon
+                className="chevron"
+                icon="fa-solid fa-chevron-left"
+              />
             </button>
           )}
-
-          <button
-            onClick={() => {
-              setPage(page + 1);
-            }}
-          >
-            Page suivante
-          </button>
+          <div>
+            {page - 1 > 0 && (
+              <span
+                className="prev"
+                onClick={() => {
+                  setPage(page - 1);
+                }}
+              >
+                {page - 1}
+              </span>
+            )}
+            <span className="current-page">{page}</span>
+            {page < Math.ceil(pageMax) && (
+              <span
+                className="next"
+                onClick={() => {
+                  setPage(page + 1);
+                }}
+              >
+                {page + 1}
+              </span>
+            )}
+          </div>
+          {page < Math.ceil(pageMax) && (
+            <button
+              onClick={() => {
+                setPage(page + 1);
+              }}
+            >
+              <FontAwesomeIcon
+                className="chevron"
+                icon="fa-solid fa-chevron-right"
+              />
+            </button>
+          )}
         </div>
+
+        <h2>MARVEL'S COMICS LIST</h2>
 
         <div className="card-section">
           {data.results.map((comic, index) => {
@@ -94,7 +154,11 @@ const Comics = (props) => {
             const comicsId = comic._id;
             const comicsDescription = comic.description;
             return (
-              <div key={comic._id} className="comic-card">
+              <div
+                key={comic._id}
+                onClick={() => handleClickComics(comic)}
+                className="comic-card "
+              >
                 <div>
                   <button
                     className="add-favoris"
@@ -111,21 +175,21 @@ const Comics = (props) => {
                     Favoris
                   </button>
                   {/* <FontAwesomeIcon
-                    icon="fa-solid fa-heart"
-                    className="favorite-icon"
-                    onClick={() => handleClickAddFavorite(title, comicsId)}
-                  /> */}
+                  icon="fa-solid fa-heart"
+                  className="favorite-icon"
+                  onClick={() => handleClickAddFavorite(title, comicsId)}
+                /> */}
                 </div>
-                <div>{comic.title}</div>
+
                 <div>
-                  <img src={pictureComics} alt="" />
+                  <img className="hvr-grow" src={pictureComics} alt="" />
                 </div>
-                <div>{comic.description}</div>
+                <div className="comics-title">{comic.title}</div>
+                {/* <div>{comic.description}</div> */}
               </div>
             );
           })}
         </div>
-
         <div className="pages">
           {page > 1 && (
             <button
@@ -133,17 +197,47 @@ const Comics = (props) => {
                 setPage(page - 1);
               }}
             >
-              Page précédente
+              <FontAwesomeIcon
+                className="chevron"
+                icon="fa-solid fa-chevron-left"
+              />
             </button>
           )}
-
-          <button
-            onClick={() => {
-              setPage(page + 1);
-            }}
-          >
-            Page suivante
-          </button>
+          <div>
+            {page - 1 > 0 && (
+              <span
+                className="prev"
+                onClick={() => {
+                  setPage(page - 1);
+                }}
+              >
+                {page - 1}
+              </span>
+            )}
+            <span className="current-page">{page}</span>
+            {page < Math.ceil(pageMax) && (
+              <span
+                className="next"
+                onClick={() => {
+                  setPage(page + 1);
+                }}
+              >
+                {page + 1}
+              </span>
+            )}
+          </div>
+          {page < Math.ceil(pageMax) && (
+            <button
+              onClick={() => {
+                setPage(page + 1);
+              }}
+            >
+              <FontAwesomeIcon
+                className="chevron"
+                icon="fa-solid fa-chevron-right"
+              />
+            </button>
+          )}
         </div>
       </div>
     </div>
