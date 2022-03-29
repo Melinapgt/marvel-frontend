@@ -26,6 +26,10 @@ function App() {
   const [comicsName, setComicsName] = useState("");
   const [userToken, setUserToken] = useState(Cookies.get("userToken") || null);
   const [selectedComic, setSelectedComic] = useState();
+  const [favoriteComicsCookies, setFavoriteComicsCookies] = useState(
+    Cookies.get("favoriteComic") || []
+  );
+
   // const [username, setUsername] = useState("");
 
   //Paramétrage des Cookies
@@ -37,6 +41,17 @@ function App() {
     }
 
     setUserToken(userToken);
+  };
+
+  const favoriteComicStorage = (favoriteComics) => {
+    // console.log("favoriteComics app ==>", favoriteComics);
+    if (favoriteComics) {
+      Cookies.set("favoriteComic", favoriteComics);
+    } else {
+      Cookies.remove("favoriteComic");
+    }
+
+    setFavoriteComicsCookies(favoriteComics);
   };
 
   // const setUsernameCookies = (username) => {
@@ -64,6 +79,8 @@ function App() {
                 title={title}
                 setSelectedComic={setSelectedComic}
                 selectedComic={selectedComic}
+                favoriteComicStorage={favoriteComicStorage}
+                favoriteComicsCookies={favoriteComicsCookies}
               />
             }
           />

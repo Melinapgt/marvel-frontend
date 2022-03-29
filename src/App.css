@@ -85,6 +85,14 @@ button {
   transform: translateX(4px);
 }
 
+.favorite {
+  background-color: red;
+}
+
+.notFavorite {
+  background-color: lightgray;
+}
+
 /* HEADER--------------------------------------------------- */
 
 .header {
@@ -301,6 +309,11 @@ button {
 .comics-page .comic-card {
   width: 220px;
   margin: 0 30px 20px 0;
+  cursor: pointer;
+}
+
+.comics-page .comic-card:hover {
+  color: #ee171f;
 }
 
 .card-section {
@@ -311,7 +324,7 @@ button {
 
 .comics-page .comics-title {
   font-size: 14px;
-  margin-top: 20px;
+  margin-top: 25px;
   margin-bottom: 20px;
   font-weight: bold;
 }
@@ -353,6 +366,10 @@ button {
 .favorite-icon:hover {
   color: red;
   cursor: pointer;
+}
+
+.favorites-page img {
+  width: 200px;
 }
 
 /* FOOTER------------------------------------------------ */

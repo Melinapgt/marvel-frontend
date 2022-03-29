@@ -34,8 +34,8 @@ const Favorites = () => {
           </div>
           {data.favoritesCharacters.map((character, index) => {
             return (
-              <div key={character.characterId}>
-                <div>{character.characterName}</div>
+              <div className="favorite-characters" key={character.characterId}>
+                <div className="character-name">{character.characterName}</div>
                 <img src={character.pictureCharacter} alt="" />
               </div>
             );

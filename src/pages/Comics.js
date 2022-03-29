@@ -11,7 +11,13 @@ const Comics = (props) => {
   const navigate = useNavigate();
 
   //Props
-  const { title, setSelectedComic, selectedComic } = props;
+  const {
+    title,
+    setSelectedComic,
+    selectedComic,
+    favoriteComicStorage,
+    favoriteComicsCookies,
+  } = props;
 
   //states
   const [data, setData] = useState();
@@ -21,6 +27,13 @@ const Comics = (props) => {
 
   //Cookies
   const userToken = Cookies.get("userToken");
+
+  // console.log("Cookies.get(favoriteComic) ==>", Cookies.get("favoriteComic"));
+  // if (Cookies.get("favoriteComic")) {
+  //   const favoriteComics = JSON.parse(Cookies.get("favoriteComic"));
+  // }
+
+  console.log("favoriteComicsCookies==>", favoriteComicsCookies);
 
   //requête au chargement de la page
   useEffect(() => {
@@ -49,29 +62,54 @@ const Comics = (props) => {
     }
   }, [title, page]);
 
+  const newFavoriteComics = [...JSON.parse(favoriteComicsCookies)];
+
   // Au clic Favoris
   const handleClickAddFavorite = async (
     title,
     comicsId,
     userToken,
     pictureComics,
-    comicsDescription
+    comicsDescription,
+    comic
   ) => {
     // console.log("title==>", title);
     // console.log("comicsId==>", comicsId);
     console.log("userToken==>", userToken);
-    try {
-      if (userToken) {
-        const response = await axios.post(
-          "http://localhost:4001/ajout/favoris/comics",
-          { title, comicsId, userToken, pictureComics, comicsDescription }
-        );
-        console.log(response.data);
+    console.log("comic =>", comic);
+    //requête en post pour Ajouter ou Supprimer le favoris en BDD
+    // try {
+    //   if (userToken) {
+    //     const response = await axios.post(
+    //       "http://localhost:4001/ajout/favoris/comics",
+    //       { title, comicsId, userToken, pictureComics, comicsDescription }
+    //     );
+    //     console.log(response.data);
+    //   } else {
+    //     navigate("/login");
+    //   }
+    // } catch (error) {
+    //   console.log("error.response==>", error.response);
+    // }
+    if (userToken) {
+      //Ajout dans le cookies
+
+      if (newFavoriteComics.find((el) => el._id === comic._id)) {
+        for (let i = 0; i < newFavoriteComics.length; i++) {
+          if (newFavoriteComics[i]._id === comic._id) {
+            newFavoriteComics.splice(i, 1);
+            // console.log(
+            //   `pour i = ${i},newFavoriteComics[i].id=${newFavoriteComics[i]._id}`
+            // );
+            break;
+          }
+        }
       } else {
-        navigate("/login");
+        newFavoriteComics.push(comic);
       }
-    } catch (error) {
-      console.log("error.response==>", error.response);
+      favoriteComicStorage(JSON.stringify(newFavoriteComics));
+    } else {
+      navigate("/login");
     }
   };
 
@@ -153,6 +191,13 @@ const Comics = (props) => {
             const comicsTitle = comic.title;
             const comicsId = comic._id;
             const comicsDescription = comic.description;
+
+            // console.log(
+            //   "favoriteComicsCookies.indexOf(comic) ==>",
+            //   favoriteComicsCookies.indexOf(comic)
+            // );
+
+            // console.log("favoriteComics ==>", favoriteComics);
             return (
               <div
                 key={comic._id}
@@ -160,20 +205,46 @@ const Comics = (props) => {
                 className="comic-card "
               >
                 <div>
-                  <button
-                    className="add-favoris"
-                    onClick={() =>
-                      handleClickAddFavorite(
-                        comicsTitle,
-                        comicsId,
-                        userToken,
-                        pictureComics,
-                        comicsDescription
-                      )
-                    }
-                  >
-                    Favoris
-                  </button>
+                  {JSON.parse(favoriteComicsCookies).length > 0 ? (
+                    <button
+                      className={`add-favoris ${
+                        JSON.parse(favoriteComicsCookies).find(
+                          (el) => el._id === comic._id
+                        )
+                          ? "favorite"
+                          : "notFavorite"
+                      }`}
+                      onClick={() =>
+                        handleClickAddFavorite(
+                          comicsTitle,
+                          comicsId,
+                          userToken,
+                          pictureComics,
+                          comicsDescription,
+                          comic
+                        )
+                      }
+                    >
+                      Favoris
+                    </button>
+                  ) : (
+                    <button
+                      className="add-favoris notFavorite"
+                      onClick={() =>
+                        handleClickAddFavorite(
+                          comicsTitle,
+                          comicsId,
+                          userToken,
+                          pictureComics,
+                          comicsDescription,
+                          comic
+                        )
+                      }
+                    >
+                      Favoris
+                    </button>
+                  )}
+
                   {/* <FontAwesomeIcon
                   icon="fa-solid fa-heart"
                   className="favorite-icon"
