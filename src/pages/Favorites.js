@@ -6,8 +6,6 @@ import ComicsModal from "../components/ComicsModal";
 const Favorites = (props) => {
   //props
   const {
-    favoriteComicsCookies,
-    favoriteCharactersCookies,
     setShowComicsModal,
     setSelectedComic,
     selectedComic,
@@ -16,6 +14,24 @@ const Favorites = (props) => {
 
   //cookies
   const userToken = Cookies.get("userToken");
+
+  let favoriteCharacters = [];
+  if (Cookies.get("favoriteCharacter")) {
+    console.log(
+      "favoriteCharacter==>",
+      JSON.parse(Cookies.get("favoriteCharacter"))
+    );
+    favoriteCharacters = JSON.parse(Cookies.get("favoriteCharacter"));
+  }
+
+  let favoriteComics = [];
+  if (Cookies.get("favoriteComic")) {
+    console.log(
+      "favoriteComic on comics page==>",
+      JSON.parse(Cookies.get("favoriteComic"))
+    );
+    favoriteComics = JSON.parse(Cookies.get("favoriteComic"));
+  }
 
   const handleClickComics = (comic) => {
     setShowComicsModal(true);
@@ -32,18 +48,20 @@ const Favorites = (props) => {
       />
       <div className="container">
         <h2>
-          Mes personnages favoris <span>Nb</span>
+          Mes personnages favoris{" "}
+          <span>{`(${favoriteCharacters.length})`}</span>
         </h2>
-        {favoriteCharactersCookies && (
+        {favoriteCharacters.length > 0 && (
           <div className="favorite-content">
-            {" "}
-            {JSON.parse(favoriteCharactersCookies).map((character, index) => {
+            {favoriteCharacters.map((character, index) => {
               const pictureCharacter = `${character.thumbnail.path}.${character.thumbnail.extension}`;
               return (
-                <div className="charachter-card" key={character._id}>
-                  <div className="character-name">{character.name}</div>
+                <div className="character-card" key={character._id}>
                   <div className="character-picture">
                     <img src={pictureCharacter} alt="" />
+                  </div>
+                  <div className="character-text">
+                    <div className="character-name">{character.name}</div>
                   </div>
                 </div>
               );
@@ -53,23 +71,27 @@ const Favorites = (props) => {
 
         <h2>
           Mes comics favoris{" "}
-          <span>{`(${JSON.parse(favoriteComicsCookies).length})`}</span>
+          {favoriteComics.length > 0 && (
+            <span>{`(${favoriteComics.length})`}</span>
+          )}
         </h2>
-        <div className="favorite-content">
-          {JSON.parse(favoriteComicsCookies).map((comic, index) => {
-            const pictureComics = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
-            return (
-              <div
-                key={comic._id}
-                className="comic-card "
-                onClick={() => handleClickComics(comic)}
-              >
-                <img src={pictureComics} alt="" />
-                <div className="comics-title">{comic.title}</div>
-              </div>
-            );
-          })}
-        </div>
+        {favoriteComics.length > 0 && (
+          <div className="favorite-content">
+            {favoriteComics.map((comic, index) => {
+              const pictureComics = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
+              return (
+                <div
+                  key={comic._id}
+                  className="comic-card "
+                  onClick={() => handleClickComics(comic)}
+                >
+                  <img src={pictureComics} alt="" />
+                  <div className="comics-title">{comic.title}</div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   ) : (

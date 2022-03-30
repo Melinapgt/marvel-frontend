@@ -4,20 +4,15 @@ import { useEffect, useState } from "react";
 import Characters from "../components/Characters";
 import Hero from "../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Cookies from "js-cookie";
 
 const Home = (props) => {
   //props
-  const { comicsName, favoriteCharactersStorage, favoriteCharactersCookies } =
-    props;
+  const { comicsName, favoriteCharactersStorage } = props;
 
   //states
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
-
-  //Cookies
-  const userToken = Cookies.get("userToken");
 
   //Requête au chargement de la page
   useEffect(() => {
@@ -97,7 +92,6 @@ const Home = (props) => {
         <Characters
           data={data}
           favoriteCharactersStorage={favoriteCharactersStorage}
-          favoriteCharactersCookies={favoriteCharactersCookies}
         />
         <div className="pages">
           {page > 1 && (

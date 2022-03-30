@@ -16,7 +16,6 @@ const Comics = (props) => {
     setSelectedComic,
     selectedComic,
     favoriteComicStorage,
-    favoriteComicsCookies,
     showComicsModal,
     setShowComicsModal,
   } = props;
@@ -28,6 +27,15 @@ const Comics = (props) => {
 
   //Cookies
   const userToken = Cookies.get("userToken");
+
+  let favoriteComics = [];
+  if (Cookies.get("favoriteComic")) {
+    console.log(
+      "favoriteComic on comics page==>",
+      JSON.parse(Cookies.get("favoriteComic"))
+    );
+    favoriteComics = JSON.parse(Cookies.get("favoriteComic"));
+  }
 
   //requête au chargement de la page
   useEffect(() => {
@@ -56,12 +64,16 @@ const Comics = (props) => {
     }
   }, [title, page]);
 
-  const newFavoriteComics = [...JSON.parse(favoriteComicsCookies)];
+  //Paramétrage variable pour l'Ajout aux favoris
+  let newFavoriteComics = [];
+  if (Cookies.get("favoriteComic")) {
+    newFavoriteComics = [...JSON.parse(Cookies.get("favoriteComic"))];
+  }
 
   // Au clic Favoris
-  const handleClickAddFavorite = async (userToken, comic) => {
-    console.log("userToken==>", userToken);
-    console.log("comic =>", comic);
+  const handleClickAddFavorite = async (comic) => {
+    // console.log("userToken==>", userToken);
+    // console.log("comic =>", comic);
 
     if (userToken) {
       //Ajout dans le cookies
@@ -159,17 +171,6 @@ const Comics = (props) => {
         <div className="card-section">
           {data.results.map((comic, index) => {
             const pictureComics = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
-
-            const comicsTitle = comic.title;
-            const comicsId = comic._id;
-            const comicsDescription = comic.description;
-
-            // console.log(
-            //   "favoriteComicsCookies.indexOf(comic) ==>",
-            //   favoriteComicsCookies.indexOf(comic)
-            // );
-
-            // console.log("favoriteComics ==>", favoriteComics);
             return (
               <div key={comic._id}>
                 <div className="comic-card ">
@@ -191,27 +192,16 @@ const Comics = (props) => {
                 </div>
 
                 <div className="icon-bar">
-                  {JSON.parse(favoriteComicsCookies).length > 0 ? (
+                  {favoriteComics.length > 0 ? (
                     <span className="add-favorite">
                       <FontAwesomeIcon
                         icon="fa-solid fa-heart"
                         className={`${
-                          JSON.parse(favoriteComicsCookies).find(
-                            (el) => el._id === comic._id
-                          )
+                          favoriteComics.find((el) => el._id === comic._id)
                             ? "favorite"
                             : "notFavorite"
                         }`}
-                        onClick={() =>
-                          handleClickAddFavorite(
-                            comicsTitle,
-                            comicsId,
-                            userToken,
-                            pictureComics,
-                            comicsDescription,
-                            comic
-                          )
-                        }
+                        onClick={() => handleClickAddFavorite(comic)}
                       />
                     </span>
                   ) : (
@@ -219,16 +209,7 @@ const Comics = (props) => {
                       <FontAwesomeIcon
                         icon="fa-solid fa-heart"
                         className=" notFavorite"
-                        onClick={() =>
-                          handleClickAddFavorite(
-                            comicsTitle,
-                            comicsId,
-                            userToken,
-                            pictureComics,
-                            comicsDescription,
-                            comic
-                          )
-                        }
+                        onClick={() => handleClickAddFavorite(comic)}
                       />
                     </span>
                   )}

@@ -244,11 +244,12 @@ button {
 
 .character-card {
   width: 220px;
-  height: 275px;
+  height: 290px;
   margin-bottom: 30px;
   margin-right: 10px;
   box-shadow: 2px 5px 10px rgba(30, 30, 30, 0.3);
   border-radius: 5px;
+  overflow: hidden;
 }
 
 .character-card .character-picture img {

@@ -35,16 +35,6 @@ function App() {
   const [selectedComic, setSelectedComic] = useState();
   const [showComicsModal, setShowComicsModal] = useState(false);
   const [userToken, setUserToken] = useState(Cookies.get("userToken") || null);
-  const [favoriteComicsCookies, setFavoriteComicsCookies] = useState(
-    Cookies.get("favoriteComic") || []
-  );
-  const [favoriteCharactersCookies, setFavoriteCharactersCookies] = useState(
-    Cookies.get("favoriteCharacters")
-  );
-
-  // const [favoriteCharactersCookies, setFavoriteCharactersCookies] = useState(
-  //   []
-  // );
 
   //Paramétrage des Cookies
   const setUser = (userToken) => {
@@ -61,21 +51,22 @@ function App() {
     // console.log("favoriteComics app ==>", favoriteComics);
     if (favoriteComics) {
       Cookies.set("favoriteComic", favoriteComics);
-    } else {
-      Cookies.remove("favoriteComic");
     }
-
-    setFavoriteComicsCookies(favoriteComics);
   };
 
   const favoriteCharactersStorage = (favoriteCharacters) => {
     if (favoriteCharacters) {
       Cookies.set("favoriteCharacter", favoriteCharacters);
-    } else {
-      Cookies.remove("favoriteCharacter");
     }
-    setFavoriteCharactersCookies(favoriteCharacters);
   };
+
+  // const favoriteCharactersStorage = (favoriteCharacters) => {
+  //   if (favoriteCharacters) {
+  //     Cookies.set("favoriteCharacter", favoriteCharacters);
+  //   } else {
+  //     Cookies.remove("favoriteCharacter");
+
+  // };
 
   return (
     <div className="app">
@@ -93,7 +84,6 @@ function App() {
               <Home
                 comicsName={comicsName}
                 favoriteCharactersStorage={favoriteCharactersStorage}
-                favoriteCharactersCookies={favoriteCharactersCookies}
               />
             }
           />
@@ -106,7 +96,6 @@ function App() {
                 setSelectedComic={setSelectedComic}
                 selectedComic={selectedComic}
                 favoriteComicStorage={favoriteComicStorage}
-                favoriteComicsCookies={favoriteComicsCookies}
                 showComicsModal={showComicsModal}
                 setShowComicsModal={setShowComicsModal}
               />
@@ -118,12 +107,10 @@ function App() {
             path="/favorites"
             element={
               <Favorites
-                favoriteComicsCookies={favoriteComicsCookies}
                 setShowComicsModal={setShowComicsModal}
                 setSelectedComic={setSelectedComic}
                 showComicsModal={showComicsModal}
                 selectedComic={selectedComic}
-                favoriteCharactersCookies={favoriteCharactersCookies}
               />
             }
           />
