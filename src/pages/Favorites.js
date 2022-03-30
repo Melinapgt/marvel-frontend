@@ -1,59 +1,77 @@
 import "../App.css";
-import { useEffect } from "react";
-import axios from "axios";
-import { useState } from "react";
 import Cookies from "js-cookie";
 import { Navigate } from "react-router-dom";
+import ComicsModal from "../components/ComicsModal";
 
-const Favorites = () => {
-  const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+const Favorites = (props) => {
+  //props
+  const {
+    favoriteComicsCookies,
+    favoriteCharactersCookies,
+    setShowComicsModal,
+    setSelectedComic,
+    selectedComic,
+    showComicsModal,
+  } = props;
 
+  //cookies
   const userToken = Cookies.get("userToken");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log("cookies ==>", userToken);
-      const response = await axios.get(
-        `http://localhost:4001/favoris?userToken=${userToken}`
-      );
-      console.log("response.data ==>", response.data);
-      setData(response.data);
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [userToken]);
+  const handleClickComics = (comic) => {
+    setShowComicsModal(true);
+    setSelectedComic(comic);
+  };
+
   return userToken ? (
-    isLoading ? (
-      <div>En cours de chargement</div>
-    ) : (
-      <div className="favorites-page">
-        <div className="container">
-          <div>
-            Mes personnages favoris <span>Nb</span>
+    <div className="favorites-page">
+      <ComicsModal
+        selectedComic={selectedComic}
+        showComicsModal={showComicsModal}
+        setSelectedComic={setSelectedComic}
+        setShowComicsModal={setShowComicsModal}
+      />
+      <div className="container">
+        <h2>
+          Mes personnages favoris <span>Nb</span>
+        </h2>
+        {favoriteCharactersCookies && (
+          <div className="favorite-content">
+            {" "}
+            {JSON.parse(favoriteCharactersCookies).map((character, index) => {
+              const pictureCharacter = `${character.thumbnail.path}.${character.thumbnail.extension}`;
+              return (
+                <div className="charachter-card" key={character._id}>
+                  <div className="character-name">{character.name}</div>
+                  <div className="character-picture">
+                    <img src={pictureCharacter} alt="" />
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          {data.favoritesCharacters.map((character, index) => {
+        )}
+
+        <h2>
+          Mes comics favoris{" "}
+          <span>{`(${JSON.parse(favoriteComicsCookies).length})`}</span>
+        </h2>
+        <div className="favorite-content">
+          {JSON.parse(favoriteComicsCookies).map((comic, index) => {
+            const pictureComics = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
             return (
-              <div className="favorite-characters" key={character.characterId}>
-                <div className="character-name">{character.characterName}</div>
-                <img src={character.pictureCharacter} alt="" />
-              </div>
-            );
-          })}
-          <div>
-            Mes comics favoris <span>Nb</span>
-          </div>
-          {data.favoritesComics.map((comic, index) => {
-            return (
-              <div key={comic.comicsId}>
-                <div>{comic.title}</div>
-                <img src={comic.pictureComics} alt="" />
+              <div
+                key={comic._id}
+                className="comic-card "
+                onClick={() => handleClickComics(comic)}
+              >
+                <img src={pictureComics} alt="" />
+                <div className="comics-title">{comic.title}</div>
               </div>
             );
           })}
         </div>
       </div>
-    )
+    </div>
   ) : (
     <Navigate to="/login" />
   );

@@ -17,23 +17,17 @@ const Comics = (props) => {
     selectedComic,
     favoriteComicStorage,
     favoriteComicsCookies,
+    showComicsModal,
+    setShowComicsModal,
   } = props;
 
   //states
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [showComicsModal, setShowComicsModal] = useState(false);
   const [page, setPage] = useState(1);
 
   //Cookies
   const userToken = Cookies.get("userToken");
-
-  // console.log("Cookies.get(favoriteComic) ==>", Cookies.get("favoriteComic"));
-  // if (Cookies.get("favoriteComic")) {
-  //   const favoriteComics = JSON.parse(Cookies.get("favoriteComic"));
-  // }
-
-  console.log("favoriteComicsCookies==>", favoriteComicsCookies);
 
   //requête au chargement de la page
   useEffect(() => {
@@ -65,32 +59,10 @@ const Comics = (props) => {
   const newFavoriteComics = [...JSON.parse(favoriteComicsCookies)];
 
   // Au clic Favoris
-  const handleClickAddFavorite = async (
-    title,
-    comicsId,
-    userToken,
-    pictureComics,
-    comicsDescription,
-    comic
-  ) => {
-    // console.log("title==>", title);
-    // console.log("comicsId==>", comicsId);
+  const handleClickAddFavorite = async (userToken, comic) => {
     console.log("userToken==>", userToken);
     console.log("comic =>", comic);
-    //requête en post pour Ajouter ou Supprimer le favoris en BDD
-    // try {
-    //   if (userToken) {
-    //     const response = await axios.post(
-    //       "http://localhost:4001/ajout/favoris/comics",
-    //       { title, comicsId, userToken, pictureComics, comicsDescription }
-    //     );
-    //     console.log(response.data);
-    //   } else {
-    //     navigate("/login");
-    //   }
-    // } catch (error) {
-    //   console.log("error.response==>", error.response);
-    // }
+
     if (userToken) {
       //Ajout dans le cookies
 
@@ -199,64 +171,74 @@ const Comics = (props) => {
 
             // console.log("favoriteComics ==>", favoriteComics);
             return (
-              <div
-                key={comic._id}
-                onClick={() => handleClickComics(comic)}
-                className="comic-card "
-              >
-                <div>
+              <div key={comic._id}>
+                <div className="comic-card ">
+                  <div>
+                    <img
+                      className="hvr-grow"
+                      onClick={() => handleClickComics(comic)}
+                      src={pictureComics}
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    className="comics-title"
+                    onClick={() => handleClickComics(comic)}
+                  >
+                    {comic.title}
+                  </div>
+                  {/* <div>{comic.description}</div> */}
+                </div>
+
+                <div className="icon-bar">
                   {JSON.parse(favoriteComicsCookies).length > 0 ? (
-                    <button
-                      className={`add-favoris ${
-                        JSON.parse(favoriteComicsCookies).find(
-                          (el) => el._id === comic._id
-                        )
-                          ? "favorite"
-                          : "notFavorite"
-                      }`}
-                      onClick={() =>
-                        handleClickAddFavorite(
-                          comicsTitle,
-                          comicsId,
-                          userToken,
-                          pictureComics,
-                          comicsDescription,
-                          comic
-                        )
-                      }
-                    >
-                      Favoris
-                    </button>
+                    <span className="add-favorite">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-heart"
+                        className={`${
+                          JSON.parse(favoriteComicsCookies).find(
+                            (el) => el._id === comic._id
+                          )
+                            ? "favorite"
+                            : "notFavorite"
+                        }`}
+                        onClick={() =>
+                          handleClickAddFavorite(
+                            comicsTitle,
+                            comicsId,
+                            userToken,
+                            pictureComics,
+                            comicsDescription,
+                            comic
+                          )
+                        }
+                      />
+                    </span>
                   ) : (
-                    <button
-                      className="add-favoris notFavorite"
-                      onClick={() =>
-                        handleClickAddFavorite(
-                          comicsTitle,
-                          comicsId,
-                          userToken,
-                          pictureComics,
-                          comicsDescription,
-                          comic
-                        )
-                      }
-                    >
-                      Favoris
-                    </button>
+                    <span className="add-favorite">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-heart"
+                        className=" notFavorite"
+                        onClick={() =>
+                          handleClickAddFavorite(
+                            comicsTitle,
+                            comicsId,
+                            userToken,
+                            pictureComics,
+                            comicsDescription,
+                            comic
+                          )
+                        }
+                      />
+                    </span>
                   )}
-
-                  {/* <FontAwesomeIcon
-                  icon="fa-solid fa-heart"
-                  className="favorite-icon"
-                  onClick={() => handleClickAddFavorite(title, comicsId)}
-                /> */}
+                  <span
+                    className="cart-icon"
+                    onClick={() => handleClickComics(comic)}
+                  >
+                    <FontAwesomeIcon icon="fa-solid fa-cart-plus" />
+                  </span>
                 </div>
-
-                <div>
-                  <img className="hvr-grow" src={pictureComics} alt="" />
-                </div>
-                <div className="comics-title">{comic.title}</div>
-                {/* <div>{comic.description}</div> */}
               </div>
             );
           })}

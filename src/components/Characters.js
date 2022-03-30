@@ -1,35 +1,62 @@
 import "../App.css";
 import { Link } from "react-router-dom";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LinesEllipsis from "react-lines-ellipsis";
 
 const Characters = (props) => {
-  const { data } = props;
-
-  const userToken = Cookies.get("userToken");
+  //Hooks setting
   const navigate = useNavigate();
 
-  const handleClickAddFavorite = async (
-    userToken,
-    pictureCharacter,
-    characterName,
-    characterId
-  ) => {
-    try {
-      if (userToken) {
-        const response = await axios.post(
-          " http://localhost:4001/ajout/favoris/characters",
-          { userToken, pictureCharacter, characterName, characterId }
-        );
-        console.log("response.data==>", response.data);
+  //props
+  const { data, favoriteCharactersStorage, favoriteCharactersCookies } = props;
+
+  //cookies
+  const userToken = Cookies.get("userToken");
+  if (favoriteCharactersCookies)
+    console.log(
+      "favoriteCharactersCookies==>",
+      JSON.parse(favoriteCharactersCookies)
+    );
+
+  let newFavoriteCharacters = [];
+
+  if (favoriteCharactersCookies) {
+    newFavoriteCharacters = [...JSON.parse(favoriteCharactersCookies)];
+  }
+
+  const handleClickAddFavorite = async (userToken, character) => {
+    // try {
+    //   if (userToken) {
+    //     const response = await axios.post(
+    //       " http://localhost:4001/ajout/favoris/characters",
+    //       { userToken, pictureCharacter, characterName, characterId }
+    //     );
+    //     console.log("response.data==>", response.data);
+    //   } else {
+    //     navigate("/login");
+    //   }
+    // } catch (error) {
+    //   console.log("error.response==>", error.response);
+    // }
+
+    if (userToken) {
+      if (newFavoriteCharacters.find((el) => el._id === character._id)) {
+        for (let i = 0; i < newFavoriteCharacters.length; i++) {
+          if (newFavoriteCharacters[i]._id === character._id) {
+            newFavoriteCharacters.splice(i, 1);
+
+            break;
+          }
+        }
       } else {
-        navigate("/login");
+        newFavoriteCharacters.push(character);
       }
-    } catch (error) {
-      console.log("error.response==>", error.response);
+      favoriteCharactersStorage(JSON.stringify(newFavoriteCharacters));
+    } else {
+      navigate("/login");
     }
   };
   return (
@@ -44,32 +71,35 @@ const Characters = (props) => {
             return (
               <div key={character._id}>
                 <div>
-                  <button
-                    className="add-favoris"
-                    onClick={() =>
-                      handleClickAddFavorite(
-                        userToken,
-                        pictureCharacter,
-                        characterName,
-                        characterId
-                      )
-                    }
-                  >
-                    Favoris
-                  </button>
-                  {/* <FontAwesomeIcon
-                    icon="fa-solid fa-heart"
-                    className="favorite-icon"
-                    onClick={() => {
-                      const favorites = async () => {
-                        const response = await localStorage.setItem("", "");
-                        if (response) {
-                          console.log(response);
-                        }
-                      };
-                      favorites().then("valeur");
-                    }}
-                  /> */}
+                  <div className="icon-bar">
+                    {favoriteCharactersCookies ? (
+                      <span className="add-favorite">
+                        <FontAwesomeIcon
+                          icon="fa-solid fa-heart"
+                          className={`${
+                            JSON.parse(favoriteCharactersCookies).find(
+                              (el) => el._id === character._id
+                            )
+                              ? "favorite"
+                              : "notFavorite"
+                          }`}
+                          onClick={() =>
+                            handleClickAddFavorite(userToken, character)
+                          }
+                        />
+                      </span>
+                    ) : (
+                      <span className="add-favorite">
+                        <FontAwesomeIcon
+                          icon="fa-solid fa-heart"
+                          className=" notFavorite"
+                          onClick={() =>
+                            handleClickAddFavorite(userToken, character)
+                          }
+                        />
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <Link
                   to={`/comics/${character._id}`}

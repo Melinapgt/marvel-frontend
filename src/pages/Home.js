@@ -4,13 +4,22 @@ import { useEffect, useState } from "react";
 import Characters from "../components/Characters";
 import Hero from "../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Cookies from "js-cookie";
 
 const Home = (props) => {
+  //props
+  const { comicsName, favoriteCharactersStorage, favoriteCharactersCookies } =
+    props;
+
+  //states
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const { comicsName } = props;
 
+  //Cookies
+  const userToken = Cookies.get("userToken");
+
+  //Requête au chargement de la page
   useEffect(() => {
     const fetchData = async () => {
       if (comicsName) {
@@ -85,7 +94,11 @@ const Home = (props) => {
           </button>
         </div>
         <h2>MARVEL'S CHARACTERS LIST</h2>
-        <Characters data={data} />
+        <Characters
+          data={data}
+          favoriteCharactersStorage={favoriteCharactersStorage}
+          favoriteCharactersCookies={favoriteCharactersCookies}
+        />
         <div className="pages">
           {page > 1 && (
             <button

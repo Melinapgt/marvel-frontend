@@ -86,11 +86,36 @@ button {
 }
 
 .favorite {
-  background-color: red;
+  /* background-color: red; */
+  color: red;
 }
 
 .notFavorite {
-  background-color: lightgray;
+  color: lightgray;
+}
+
+.add-favorite {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.icon-bar {
+  display: flex;
+  align-items: flex-start;
+}
+
+.cart-icon {
+  font-size: 20px;
+  color: lightgray;
+  margin-left: 20px;
+}
+
+.cart-icon:hover {
+  cursor: pointer;
+  color: #ee171f;
 }
 
 /* HEADER--------------------------------------------------- */
@@ -294,6 +319,13 @@ button {
   margin: 0 20px 20px 0;
 }
 
+/* COMICS PAGES  & FAVORITES PAGE------------------------------------------------ */
+.comic-card {
+  width: 220px;
+  margin: 0 30px 5px 0;
+  cursor: pointer;
+}
+
 /* COMICS PAGES ------------------------------------------------ */
 
 .comics-page {
@@ -306,12 +338,6 @@ button {
   box-shadow: 10px 5px 10px rgba(30, 30, 30, 0.3);
 }
 
-.comics-page .comic-card {
-  width: 220px;
-  margin: 0 30px 20px 0;
-  cursor: pointer;
-}
-
 .comics-page .comic-card:hover {
   color: #ee171f;
 }
@@ -322,7 +348,7 @@ button {
   justify-content: center;
 }
 
-.comics-page .comics-title {
+.comics-title {
   font-size: 14px;
   margin-top: 25px;
   margin-bottom: 20px;
@@ -370,6 +396,15 @@ button {
 
 .favorites-page img {
   width: 200px;
+}
+
+.favorites-page {
+  min-height: 70vh;
+}
+
+.favorite-content {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /* FOOTER------------------------------------------------ */

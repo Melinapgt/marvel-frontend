@@ -12,25 +12,39 @@ import Login from "./pages/Login";
 import Cookies from "js-cookie";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faCartPlus,
   faChevronLeft,
   faChevronRight,
   faCircleChevronRight,
   faHeart,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faHeart, faChevronRight, faChevronLeft, faX, faCircleChevronRight);
+library.add(
+  faHeart,
+  faChevronRight,
+  faChevronLeft,
+  faX,
+  faCircleChevronRight,
+  faCartPlus
+);
 
 function App() {
   //States
   const [title, setTitle] = useState("");
   const [comicsName, setComicsName] = useState("");
-  const [userToken, setUserToken] = useState(Cookies.get("userToken") || null);
   const [selectedComic, setSelectedComic] = useState();
+  const [showComicsModal, setShowComicsModal] = useState(false);
+  const [userToken, setUserToken] = useState(Cookies.get("userToken") || null);
   const [favoriteComicsCookies, setFavoriteComicsCookies] = useState(
     Cookies.get("favoriteComic") || []
   );
+  const [favoriteCharactersCookies, setFavoriteCharactersCookies] = useState(
+    Cookies.get("favoriteCharacters")
+  );
 
-  // const [username, setUsername] = useState("");
+  // const [favoriteCharactersCookies, setFavoriteCharactersCookies] = useState(
+  //   []
+  // );
 
   //Paramétrage des Cookies
   const setUser = (userToken) => {
@@ -54,11 +68,14 @@ function App() {
     setFavoriteComicsCookies(favoriteComics);
   };
 
-  // const setUsernameCookies = (username) => {
-  //   if (username) {
-  //     Cookies.set("username", username, { expires: 10 });
-  //   }
-  // };
+  const favoriteCharactersStorage = (favoriteCharacters) => {
+    if (favoriteCharacters) {
+      Cookies.set("favoriteCharacter", favoriteCharacters);
+    } else {
+      Cookies.remove("favoriteCharacter");
+    }
+    setFavoriteCharactersCookies(favoriteCharacters);
+  };
 
   return (
     <div className="app">
@@ -70,7 +87,16 @@ function App() {
           setUser={setUser}
         />
         <Routes>
-          <Route path="/" element={<Home comicsName={comicsName} />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                comicsName={comicsName}
+                favoriteCharactersStorage={favoriteCharactersStorage}
+                favoriteCharactersCookies={favoriteCharactersCookies}
+              />
+            }
+          />
           <Route path="/comics/:characterId" element={<ComicsCharacterId />} />
           <Route
             path="/comics"
@@ -81,12 +107,26 @@ function App() {
                 selectedComic={selectedComic}
                 favoriteComicStorage={favoriteComicStorage}
                 favoriteComicsCookies={favoriteComicsCookies}
+                showComicsModal={showComicsModal}
+                setShowComicsModal={setShowComicsModal}
               />
             }
           />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
-          <Route path="/favorites" element={<Favorites />} />
+          <Route
+            path="/favorites"
+            element={
+              <Favorites
+                favoriteComicsCookies={favoriteComicsCookies}
+                setShowComicsModal={setShowComicsModal}
+                setSelectedComic={setSelectedComic}
+                showComicsModal={showComicsModal}
+                selectedComic={selectedComic}
+                favoriteCharactersCookies={favoriteCharactersCookies}
+              />
+            }
+          />
         </Routes>
         <Footer />
       </Router>
