@@ -18,19 +18,27 @@ const Home = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       if (comicsName) {
-        const response = await axios.get(
-          `http://localhost:4001/characters?name=${comicsName}&page=${page}`
-        );
-        console.log(response.data);
-        setData(response.data);
-        setIsLoading(false);
+        try {
+          const response = await axios.get(
+            `http://localhost:4001/characters?name=${comicsName}&page=${page}`
+          );
+          console.log(response.data);
+          setData(response.data);
+          setIsLoading(false);
+        } catch (error) {
+          console.log("error home ==>", error.response);
+        }
       } else {
-        const response = await axios.get(
-          `http://localhost:4001/characters?page=${page}`
-        );
-        console.log(response.data);
-        setData(response.data);
-        setIsLoading(false);
+        try {
+          const response = await axios.get(
+            `http://localhost:4001/characters?page=${page}`
+          );
+          console.log(response.data);
+          setData(response.data);
+          setIsLoading(false);
+        } catch (error) {
+          console.log("error home ==>", error.response);
+        }
       }
     };
     fetchData();

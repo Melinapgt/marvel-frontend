@@ -118,6 +118,11 @@ button {
   color: #ee171f;
 }
 
+.warning {
+  color: #ee171f;
+  margin-top: 10px;
+}
+
 /* HEADER--------------------------------------------------- */
 
 .header {
@@ -308,16 +313,41 @@ button {
 }
 
 /* COMIC CHARACHTER PAGES ------------------------------------------------ */
+.comic-characterId-page .container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.comic-characterId--content {
+  width: 48%;
+  margin-bottom: 20px;
+}
 
 .comic-characterId-page img {
   width: 200px;
   object-fit: cover;
+  box-shadow: 10px 5px 10px rgba(30, 30, 30, 0.3);
 }
 
 .comic-characterId-page .comic-card {
-  width: 400px;
-  border: 2px solid red;
+  width: 100%;
   margin: 0 20px 20px 0;
+  display: flex;
+}
+
+.comic-card--text {
+  margin-left: 20px;
+  padding: 10px;
+}
+
+.comic-description {
+  height: 200px;
+  line-height: 20px;
+  overflow: hidden;
+  overflow-y: scroll;
+  margin-bottom: 20px;
 }
 
 /* COMICS PAGES  & FAVORITES PAGE------------------------------------------------ */
@@ -362,7 +392,7 @@ button {
 
 /* FORMS------------------------------------------------ */
 
-.signup-form {
+form {
   display: flex;
   flex-direction: column;
   width: 300px;
@@ -380,8 +410,31 @@ button {
   height: 70vh;
 }
 
-.signup-form button {
+.container-form h2 {
+  text-align: center;
+  margin-left: 0px;
+}
+
+form input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #ee171f;
+}
+
+form ::placeholder {
+  font-size: 20px;
+  font-family: "Roboto Condensed", sans-serif;
+  color: lightgray;
+}
+
+form button {
   margin-top: 20px;
+  padding: 10px;
+  background-color: #ee171f;
+  color: white;
+  border: none;
+  font-size: 18px;
 }
 
 /* FAVORIS------------------------------------------------ */
@@ -481,6 +534,7 @@ button {
 
 .comic-modal--text {
   padding-left: 30px;
+  max-width: 800px;
 }
 
 .comic-modal--text p {

@@ -4,10 +4,17 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 const Header = (props) => {
+  //props
   const { setTitle, setComicsName, userToken, setUser } = props;
+
+  //hook settings
   const location = useLocation();
 
   // console.log(location.pathname);
+
+  // const refreshPage = () => {
+  //   window.location.reload();
+  // };
   return (
     <div className="header">
       <div className="header-container">

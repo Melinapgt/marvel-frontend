@@ -30,10 +30,10 @@ const Comics = (props) => {
 
   let favoriteComics = [];
   if (Cookies.get("favoriteComic")) {
-    console.log(
-      "favoriteComic on comics page==>",
-      JSON.parse(Cookies.get("favoriteComic"))
-    );
+    // console.log(
+    //   "favoriteComic on comics page==>",
+    //   JSON.parse(Cookies.get("favoriteComic"))
+    // );
     favoriteComics = JSON.parse(Cookies.get("favoriteComic"));
   }
 
@@ -64,14 +64,13 @@ const Comics = (props) => {
     }
   }, [title, page]);
 
-  //Paramétrage variable pour l'Ajout aux favoris
-  let newFavoriteComics = [];
-  if (Cookies.get("favoriteComic")) {
-    newFavoriteComics = [...JSON.parse(Cookies.get("favoriteComic"))];
-  }
+  const refreshPage = () => {
+    window.location.reload();
+  };
+  const newFavoriteComics = [...favoriteComics];
 
   // Au clic Favoris
-  const handleClickAddFavorite = async (comic) => {
+  const handleClickAddFavorite = (comic) => {
     // console.log("userToken==>", userToken);
     // console.log("comic =>", comic);
 
@@ -90,8 +89,11 @@ const Comics = (props) => {
         }
       } else {
         newFavoriteComics.push(comic);
+        console.log("ajouté");
       }
+      console.log("newFavoriteComics comicspage=+>", newFavoriteComics);
       favoriteComicStorage(JSON.stringify(newFavoriteComics));
+      refreshPage();
     } else {
       navigate("/login");
     }

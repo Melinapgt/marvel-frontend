@@ -17,27 +17,21 @@ const Characters = (props) => {
 
   let favoriteCharacters = [];
   if (Cookies.get("favoriteCharacter")) {
-    console.log(
-      "favoriteCharacter on characters page==>",
-      JSON.parse(Cookies.get("favoriteCharacter"))
-    );
+    // console.log(
+    //   "favoriteCharacter on characters page==>",
+    //   JSON.parse(Cookies.get("favoriteCharacter"))
+    // );
     favoriteCharacters = JSON.parse(Cookies.get("favoriteCharacter"));
   }
 
-  //Paramétrage variable pour l'Ajout aux favoris
-  let newFavoriteCharacters = [];
+  const newFavoriteCharacters = [...favoriteCharacters];
 
-  if (Cookies.get("favoriteCharacter")) {
-    newFavoriteCharacters = [...JSON.parse(Cookies.get("favoriteCharacter"))];
-  }
-
-  const handleClickAddFavorite = async (character) => {
+  const handleClickAddFavorite = (character) => {
     if (userToken) {
       if (newFavoriteCharacters.find((el) => el._id === character._id)) {
         for (let i = 0; i < newFavoriteCharacters.length; i++) {
           if (newFavoriteCharacters[i]._id === character._id) {
             newFavoriteCharacters.splice(i, 1);
-
             break;
           }
         }

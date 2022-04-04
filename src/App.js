@@ -87,7 +87,17 @@ function App() {
               />
             }
           />
-          <Route path="/comics/:characterId" element={<ComicsCharacterId />} />
+          <Route
+            path="/comics/:characterId"
+            element={
+              <ComicsCharacterId
+                setSelectedComic={setSelectedComic}
+                setShowComicsModal={setShowComicsModal}
+                showComicsModal={showComicsModal}
+                selectedComic={selectedComic}
+              />
+            }
+          />
           <Route
             path="/comics"
             element={
