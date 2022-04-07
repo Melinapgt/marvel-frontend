@@ -10,13 +10,16 @@ import { useState } from "react";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Cookies from "js-cookie";
+import Payment from "./pages/Payment";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faBars,
   faCartPlus,
   faChevronLeft,
   faChevronRight,
   faCircleChevronRight,
   faHeart,
+  faMagnifyingGlass,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
@@ -25,7 +28,9 @@ library.add(
   faChevronLeft,
   faX,
   faCircleChevronRight,
-  faCartPlus
+  faCartPlus,
+  faMagnifyingGlass,
+  faBars
 );
 
 function App() {
@@ -47,6 +52,12 @@ function App() {
     setUserToken(userToken);
   };
 
+  const userIdCookies = (userId) => {
+    if (userId) {
+      Cookies.set("userId", userId);
+    }
+  };
+
   const favoriteComicStorage = (favoriteComics) => {
     // console.log("favoriteComics app ==>", favoriteComics);
     if (favoriteComics) {
@@ -59,14 +70,6 @@ function App() {
       Cookies.set("favoriteCharacter", favoriteCharacters);
     }
   };
-
-  // const favoriteCharactersStorage = (favoriteCharacters) => {
-  //   if (favoriteCharacters) {
-  //     Cookies.set("favoriteCharacter", favoriteCharacters);
-  //   } else {
-  //     Cookies.remove("favoriteCharacter");
-
-  // };
 
   return (
     <div className="app">
@@ -111,8 +114,14 @@ function App() {
               />
             }
           />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route
+            path="/signup"
+            element={<Signup setUser={setUser} userIdCookies={userIdCookies} />}
+          />
+          <Route
+            path="/login"
+            element={<Login setUser={setUser} userIdCookies={userIdCookies} />}
+          />
           <Route
             path="/favorites"
             element={
@@ -124,6 +133,7 @@ function App() {
               />
             }
           />
+          <Route path="/payment" element={<Payment userToken={userToken} />} />
         </Routes>
         <Footer />
       </Router>

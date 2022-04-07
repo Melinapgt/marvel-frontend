@@ -1,11 +1,22 @@
 import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 
 const ComicsModal = (props) => {
   //Props
   const { showComicsModal, selectedComic, setShowComicsModal } = props;
 
+  //hooks setting
+  const navigate = useNavigate();
+
+  const price = (23.5).toFixed(2);
+
   const handleClickClose = () => {
+    setShowComicsModal(false);
+  };
+
+  const handleClickBuy = () => {
+    navigate("/payment", { state: { title: selectedComic.title, price } });
     setShowComicsModal(false);
   };
 
@@ -29,8 +40,8 @@ const ComicsModal = (props) => {
               <div className="comic-modal--text">
                 <h3>{selectedComic.title}</h3>
                 <p>{selectedComic.description}</p>
-                <p className="comic-modal--price">23,50€</p>
-                <button>
+                <p className="comic-modal--price">{price}€</p>
+                <button onClick={handleClickBuy}>
                   ACHETER{" "}
                   <span className="hvr-icon-forward">
                     <FontAwesomeIcon

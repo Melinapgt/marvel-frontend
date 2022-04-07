@@ -4,7 +4,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Signup = () => {
+const Signup = (props) => {
+  //props
+  const { setUser, userIdCookies } = props;
+
   //states
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -25,6 +28,8 @@ const Signup = () => {
         password,
       });
       console.log(response.data);
+      setUser(response.data.userToken);
+      userIdCookies(response.data.userIdCookies);
       navigate("/");
     } catch (error) {
       console.log("erreur.response signup==>", error.response);

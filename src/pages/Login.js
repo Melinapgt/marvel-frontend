@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Login = (props) => {
   //props
-  const { setUser } = props;
+  const { setUser, userIdCookies } = props;
 
   //states
   const [email, setEmail] = useState("");
@@ -25,12 +25,9 @@ const Login = (props) => {
           password,
         });
         console.log(response.data);
-        // const resUserId = response.data.userId;
-        // const username = response.data.firstname;
-        // setUsername(username);
-        // setUsernameCookies(username);
 
         setUser(response.data.userToken);
+        userIdCookies(response.data.userId);
         navigate("/");
       } else {
         setMessage("Incorrect email or password!");
