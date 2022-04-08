@@ -9,12 +9,15 @@ const ComicsModal = (props) => {
   //hooks setting
   const navigate = useNavigate();
 
+  //déclaration d'un prix fixe pour la démo (le même pour chaque comics)
   const price = (23.5).toFixed(2);
 
   const handleClickClose = () => {
     setShowComicsModal(false);
   };
 
+  //fonction qui permet de naviguer vers la page de paiement
+  //on envoie les informations nécessaire pour la requête stripe
   const handleClickBuy = () => {
     navigate("/payment", { state: { title: selectedComic.title, price } });
     setShowComicsModal(false);

@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-// import ResizeObserver from "react-resize-detector";
-// import { withResizeDetector } from "react-resize-detector";
 import { useResizeDetector } from "react-resize-detector";
-import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const Header = (props) => {
   //props
@@ -19,10 +19,8 @@ const Header = (props) => {
   //hook settings
   const location = useLocation();
 
-  // console.log(location.pathname);
-
   //gestion de la taille de l'écran l'affichage du menu
-  const { width, height, ref } = useResizeDetector();
+  const { width, ref } = useResizeDetector();
 
   useEffect(() => {
     setIsBigScreen(width >= 1024 ? true : false);
@@ -31,9 +29,18 @@ const Header = (props) => {
     } else {
       console.log("smallScreen");
     }
-  }, [width]);
+  }, [width, isBigScreen]);
 
-  const handleClickMenuIcon = () => {};
+  // MUI paramétrages pour le menu dropdown responsive
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div className="header" ref={ref}>
@@ -100,42 +107,88 @@ const Header = (props) => {
               </div>
             )}
           </div>
-        ) : (
-          <Wrapper className="MyMenuButton">
-            <Button className="menu-icon" onClick={handleClickMenuIcon}>
-              <FontAwesomeIcon icon="fa-solid fa-bars" />
+        ) : userToken ? (
+          <div>
+            <Button
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <FontAwesomeIcon className="menu-icon" icon="fa-solid fa-bars" />
             </Button>
-            <Menu>
-              <ul>
-                <Link to="/comics" className="link-comics">
-                  <div>COMICS</div>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handleClose}>
+                {" "}
+                <Link className="link" to="/comics">
+                  Comics
                 </Link>
-
-                <Link to="/favorites" className="link-favorites">
-                  <div>FAVORIS</div>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link className="link" to="/favorites">
+                  Favorites
                 </Link>
-                {userToken ? (
-                  <div
-                    className="btn-logout"
-                    onClick={() => {
-                      setUser(null);
-                    }}
-                  >
-                    Se déconnecter
-                  </div>
-                ) : (
-                  <div>
-                    <Link to="/login">
-                      <div>Se connecter</div>
-                    </Link>
-                    <Link to="/signup">
-                      <div>S'inscrire</div>
-                    </Link>
-                  </div>
-                )}
-              </ul>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link className="link" to="/">
+                  Logout
+                </Link>
+              </MenuItem>
             </Menu>
-          </Wrapper>
+          </div>
+        ) : (
+          <div>
+            {" "}
+            <Button
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <FontAwesomeIcon className="menu-icon" icon="fa-solid fa-bars" />
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handleClose}>
+                {" "}
+                <Link className="link" to="/comics">
+                  Comics
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link className="link" to="/favorites">
+                  Favorites
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link className="link" to="/login">
+                  Login
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link className="link" to="/signin">
+                  Signin
+                </Link>
+              </MenuItem>
+            </Menu>
+          </div>
         )}
       </div>
     </div>

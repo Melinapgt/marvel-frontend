@@ -13,13 +13,13 @@ const CheckoutForm = (props) => {
   const elements = useElements();
 
   //states
-  //   const [completed, setCompleted] = useState(false);
   const [data, setData] = useState();
 
   //Cookies
   const userId = Cookies.get("userId");
   console.log("userId cookies", userId);
 
+  //fonction qui envoie la requête  de paiement au serveur et stripe
   const handleSubmit = async (event) => {
     event.preventDefault();
 

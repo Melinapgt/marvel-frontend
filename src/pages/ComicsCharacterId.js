@@ -24,9 +24,9 @@ const ComicsCharacterId = (props) => {
   //States
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const { characterId } = useParams();
 
-  //   console.log("params==>", characterId);
+  //params
+  const { characterId } = useParams();
 
   //Cookies
   const userToken = Cookies.get("userToken");
@@ -57,6 +57,7 @@ const ComicsCharacterId = (props) => {
     fetchData();
   }, [characterId]);
 
+  //fonction qui permet d'ouvir le modal comics
   const handleClickComics = (comic) => {
     setShowComicsModal(true);
     setSelectedComic(comic);
@@ -64,7 +65,7 @@ const ComicsCharacterId = (props) => {
 
   const newFavoriteComics = [...favoriteComics];
 
-  // Au clic Favoris
+  // Au clic Favoris, fonction qui permet d'ajouter ou supprimer un favoris
   const handleClickAddFavorite = async (comic) => {
     // console.log("userToken==>", userToken);
     // console.log("comic =>", comic);

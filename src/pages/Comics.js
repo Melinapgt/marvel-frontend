@@ -69,7 +69,7 @@ const Comics = (props) => {
   };
   const newFavoriteComics = [...favoriteComics];
 
-  // Au clic Favoris
+  // Au clic Favoris, fonction qui permet d'ajouter ou supprimer un favoris
   const handleClickAddFavorite = (comic) => {
     // console.log("userToken==>", userToken);
     // console.log("comic =>", comic);
@@ -102,6 +102,7 @@ const Comics = (props) => {
   //Déclaration de variable
   const pageMax = 1493 / 100;
 
+  //fonction qui permet d'ouvrir le modal comics
   const handleClickComics = (comic) => {
     setShowComicsModal(true);
     setSelectedComic(comic);
@@ -190,7 +191,6 @@ const Comics = (props) => {
                   >
                     {comic.title}
                   </div>
-                  {/* <div>{comic.description}</div> */}
                 </div>
 
                 <div className="icon-bar">

@@ -26,6 +26,8 @@ const Characters = (props) => {
 
   const newFavoriteCharacters = [...favoriteCharacters];
 
+  //Fonction qui ajoute ou supprime un favoris
+  //si le personnage est déjà présent dans le cookies alors il est supprimé
   const handleClickAddFavorite = (character) => {
     if (userToken) {
       if (newFavoriteCharacters.find((el) => el._id === character._id)) {
@@ -87,10 +89,6 @@ const Characters = (props) => {
                     <div className="character-picture">
                       <img src={pictureCharacter} alt="" />
                     </div>
-                    {/* <div className="character-name">
-                        <p>{character.name}</p>
-                      </div> */}
-
                     <div className="character-text">
                       <div className="character-name">
                         <p>{character.name}</p>

@@ -33,6 +33,7 @@ const Favorites = (props) => {
     favoriteComics = JSON.parse(Cookies.get("favoriteComic"));
   }
 
+  //fonction qui permet d'ouvrir le modal comics
   const handleClickComics = (comic) => {
     setShowComicsModal(true);
     setSelectedComic(comic);
