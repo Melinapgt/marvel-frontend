@@ -37,11 +37,14 @@ const CheckoutForm = (props) => {
       // Une fois le token reçu depuis l'API Stripe
       // Requête vers notre serveur
       // On envoie le token reçu depuis l'API Stripe
-      const response = await axios.post("http://localhost:4001/pay", {
-        stripeToken,
-        amount: amount,
-        description: title,
-      });
+      const response = await axios.post(
+        "https://marvel-comics-backend.herokuapp.com/pay",
+        {
+          stripeToken,
+          amount: amount,
+          description: title,
+        }
+      );
 
       console.log(response.data);
       setData(response.data);

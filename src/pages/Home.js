@@ -20,7 +20,7 @@ const Home = (props) => {
       if (comicsName) {
         try {
           const response = await axios.get(
-            `http://localhost:4001/characters?name=${comicsName}&page=${page}`
+            `https://marvel-comics-backend.herokuapp.com/characters?name=${comicsName}&page=${page}`
           );
           console.log(response.data);
           setData(response.data);
@@ -31,7 +31,7 @@ const Home = (props) => {
       } else {
         try {
           const response = await axios.get(
-            `http://localhost:4001/characters?page=${page}`
+            `https://marvel-comics-backend.herokuapp.com/characters?page=${page}`
           );
           console.log(response.data);
           setData(response.data);

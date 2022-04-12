@@ -21,12 +21,15 @@ const Signup = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4001/signup", {
-        firstname,
-        lastname,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://marvel-comics-backend.herokuapp.com/signup",
+        {
+          firstname,
+          lastname,
+          email,
+          password,
+        }
+      );
       console.log(response.data);
       setUser(response.data.userToken);
       userIdCookies(response.data.userIdCookies);

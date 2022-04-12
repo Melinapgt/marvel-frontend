@@ -43,14 +43,14 @@ const Comics = (props) => {
       const fetchData = async () => {
         if (title) {
           const response = await axios.get(
-            `http://localhost:4001/comics?title=${title}&page=${page}`
+            `https://marvel-comics-backend.herokuapp.com/comics?title=${title}&page=${page}`
           );
           console.log("response.data==>", response.data);
           setData(response.data);
           setIsLoading(false);
         } else {
           const response = await axios.get(
-            `http://localhost:4001/comics?page=${page}`
+            `https://marvel-comics-backend.herokuapp.com/comics?page=${page}`
           );
           console.log("response.data==>", response.data);
           setData(response.data);

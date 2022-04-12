@@ -45,7 +45,7 @@ const ComicsCharacterId = (props) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4001/comics/${characterId}`
+          `https://marvel-comics-backend.herokuapp.com/comics/${characterId}`
         );
         console.log(response.data);
         setData(response.data);
