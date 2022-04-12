@@ -238,7 +238,7 @@ button {
   object-fit: cover;
   object-position: top;
   filter: grayscale(50%);
-  opacity: 50%;
+  /* opacity: 50%; */
 }
 /* HOME--------------------------------------------------- */
 .homepage {
