@@ -9,6 +9,7 @@
 A website about Marvel's comics and characters.
 It shows different features such as Login/Signup, Research, Add to favorites, Modal display, buy a comics.
 User's data are managed with MongoDB Atlas. 
+For this demo, Favorites are managed with cookies. Be careful with the storage size limit (4Ko). 
 
 ## Deployment
-This project is deployed with Heroku
+This project is deployed with Netlifly
