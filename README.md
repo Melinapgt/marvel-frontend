@@ -11,5 +11,11 @@ It shows different features such as Login/Signup, Research, Add to favorites, Mo
 User's data are managed with MongoDB Atlas. 
 For this demo, Favorites are managed with cookies. Be careful with the storage size limit (4Ko). 
 
+<img width="1423" alt="Capture d’écran 2022-04-13 à 15 28 56" src="https://user-images.githubusercontent.com/93988861/163191468-54a7708f-4e0b-49ed-aca4-151029215cd8.png">
+
+
+## Built with 
+[React.js](https://reactjs.org/)
+
 ## Deployment
-This project is deployed with Netlifly
+This project is deployed with [Netlifly](https://marvel-comics-mp.netlify.app/)
